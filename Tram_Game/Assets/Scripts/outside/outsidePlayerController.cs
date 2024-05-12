@@ -126,7 +126,7 @@ public class outsidePlayerController : MonoBehaviour
         rotate_character_to_mouse();
         MoveToInput();
         check_if_picking_up_item_then_proceed();
-        if(Input.GetKeyDown(KeyCode.Space)) {
+        if(Input.GetKeyDown(KeyCode.Space) && isOnDroppingOfStation) {
             gameManager.GetComponent<outsideGameController>().end_scene();
         }
     }
