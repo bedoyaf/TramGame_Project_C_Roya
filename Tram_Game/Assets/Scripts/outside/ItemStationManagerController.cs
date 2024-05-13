@@ -28,7 +28,7 @@ public class ItemStationManagerController : MonoBehaviour
 
     void setupStations()
     {
-
+        Debug.Log("setting up");
         int setStations = 0;
         foreach (string item in items)
         {
@@ -54,6 +54,7 @@ public class ItemStationManagerController : MonoBehaviour
             {
                 setSprite = CoffeStand;
             }
+            Debug.Log(setSprite + ", " + item);
             adding.GetComponent<ItemStationController>().set_Item(item, setSprite);
 
         }

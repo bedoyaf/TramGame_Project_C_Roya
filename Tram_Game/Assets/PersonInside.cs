@@ -8,6 +8,7 @@ public class PersonInside : MonoBehaviour
 
     private string chosenItem = "";    // The item the person wants
     private bool playerInRange = false; // Flag to indicate if the player is in range
+    private bool isSatisfied = false;
     private GameCoreInside gameCoreInside;
 
     void Start()
@@ -28,15 +29,17 @@ public class PersonInside : MonoBehaviour
     void Update()
     {
         // Check if the player is in range and pressing the interact key ("E")
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !isSatisfied)
         {
-            Debug.Log("You pressed 'E' on me.");
+            //Debug.Log("You pressed 'E' on me.");
             // Check if the player has the correct item in their inventory
             if (gameCoreInside.HasItem(chosenItem))
             {
                 // Player has the correct item, gain score and hide the bubble
                 gameCoreInside.AddScore(scoreValue);
+                isSatisfied = true;
                 HideBubble();
+                gameCoreInside.RemoveItemText(chosenItem);
             }
         }
     }

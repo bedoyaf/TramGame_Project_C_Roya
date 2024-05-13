@@ -24,16 +24,21 @@ public class outsideGameController : MonoBehaviour
     private float currentTime; // Current time left
     private bool isGameOver = false; // Flag to check if game is over
 
-    public List<string> gatheredItems = new List<string>();
+    public StringListManager gatheredItems;
 
     public List<GameObject> objectsToDeactivate = new List<GameObject>();
     public void AddItemToStorage(string item)
     {
         gatheredItems.Add(item);
-        Debug.Log(gatheredItems.Count);
     }
     void Start()
     {
+        gatheredItems = FindObjectOfType<StringListManager>();
+        if (gatheredItems == null)
+        {
+            GameObject managerObj = new GameObject("StringListManager");
+            gatheredItems = managerObj.AddComponent<StringListManager>();
+        }
         StartTimer();
     }
     void StartTimer()
@@ -72,7 +77,7 @@ public class outsideGameController : MonoBehaviour
     }
     public void end_scene()
     {
-        PlayerPrefs.SetString("Items", JsonUtility.ToJson(gatheredItems));
+        Debug.Log("Gathered count" + gatheredItems.Count());
         SceneManager.LoadScene("Inside");
     }
 
