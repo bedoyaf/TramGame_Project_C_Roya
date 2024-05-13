@@ -1,34 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class ItemStationController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // public Item GeneratedItem = new Item("sadam");
-    public string GeneratedItem = "None";
+    public Sprite pillStand;
+    public Sprite burgerStand;
+    public Sprite newspaperStand;
+    public Sprite coffeeStand;
 
-    SpriteRenderer spriterenderer;
+    private string[] itemTypes = { "Burger", "Pills", "Newspaper", "Coffee" };
+
+    public string GeneratedItem { get; private set; } = "None";
+
+    SpriteRenderer spriteRenderer;
+
     void Start()
     {
-        spriterenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        SetRandomItemType();
+    }
+
+    void SetRandomItemType()
+    {
+        int randomIndex = Random.Range(0, itemTypes.Length);
+        GeneratedItem = itemTypes[randomIndex];
+        SetSpriteForItemType(GeneratedItem);
+    }
+
+    void SetSpriteForItemType(string itemType)
+    {
+        switch (itemType)
+        {
+            case "Burger":
+                spriteRenderer.sprite = burgerStand;
+                break;
+            case "Pills":
+                spriteRenderer.sprite = pillStand;
+                break;
+            case "Newspaper":
+                spriteRenderer.sprite = newspaperStand;
+                break;
+            case "Coffee":
+                spriteRenderer.sprite = coffeeStand;
+                break;
+            default:
+                Debug.LogError("Invalid item type: " + itemType);
+                break;
+        }
+    }
+
+    public void SetItem(string item)
+    {
+        GeneratedItem = item;
+        SetSpriteForItemType(item);
     }
 
     public string CreateItem()
     {
         return GeneratedItem;
-    }
-
-    public void set_Item(string item, Sprite sprite)
-    {
-        GeneratedItem = item;
-        spriterenderer.sprite = sprite;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

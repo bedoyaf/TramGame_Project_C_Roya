@@ -9,11 +9,6 @@ public class ItemStationManagerController : MonoBehaviour
 
     public List<GameObject> stations = new List<GameObject>();
 
-    public Sprite pillStand;
-    public Sprite burgerStand;
-    public Sprite NewspaperStand;
-    public Sprite CoffeStand;
-
     public List<string> items = new List<string>();
 
     public int numOfWorkingStations = 4;
@@ -33,29 +28,14 @@ public class ItemStationManagerController : MonoBehaviour
         foreach (string item in items)
         {
             setStations++;
-            GameObject adding = stations[UnityEngine.Random.Range(0, stations.Count)];
+            if(stations.Count == 0)
+            {
+                break;
+            }
+            int randomIndex = UnityEngine.Random.Range(0, stations.Count);
+            GameObject adding = stations[randomIndex];
 
-            stations.Remove(adding);
-
-            Sprite setSprite = null;
-            if (item == "Burger")
-            {
-                setSprite = burgerStand;
-            }
-            else if (item == "Pills")
-            {
-                setSprite = pillStand;
-            }
-            else if (item == "Newspaper")
-            {
-                setSprite = NewspaperStand;
-            }
-            else if ((item == "Coffee"))
-            {
-                setSprite = CoffeStand;
-            }
-            Debug.Log(setSprite + ", " + item);
-            adding.GetComponent<ItemStationController>().set_Item(item, setSprite);
+            stations.RemoveAt(randomIndex);
 
         }
         foreach(GameObject i in stations)
