@@ -1,18 +1,12 @@
 using UnityEngine;
 
-public class ChairSpawner : MonoBehaviour
+public class ChairSpawn : MonoBehaviour
 {
-    public GameObject[] personSprites; // Array to hold the sprites of people sitting on the chair
+    public GameObject[] personPrefabs; // Array to hold the prefabs of people sitting on the chair
     public float spawnChance = 0.5f;   // Probability of spawning someone on the chair (0.5 means 50% chance)
 
     void Start()
     {
-        // Disable all person sprites initially
-        foreach (GameObject sprite in personSprites)
-        {
-            sprite.SetActive(false);
-        }
-
         // Check if someone should spawn on the chair
         if (Random.value < spawnChance)
         {
@@ -22,10 +16,10 @@ public class ChairSpawner : MonoBehaviour
 
     void SpawnPerson()
     {
-        // Randomly select one of the person sprites
-        int randomIndex = Random.Range(0, personSprites.Length);
+        // Randomly select one of the person prefabs
+        GameObject randomPersonPrefab = personPrefabs[Random.Range(0, personPrefabs.Length)];
 
-        // Activate the selected person sprite
-        personSprites[randomIndex].SetActive(true);
+        // Instantiate the selected person prefab at the chair's position and rotation
+        GameObject newPerson = Instantiate(randomPersonPrefab, transform.position + new Vector3(0.285f, 0.581f, 0), transform.rotation, transform);
     }
 }
