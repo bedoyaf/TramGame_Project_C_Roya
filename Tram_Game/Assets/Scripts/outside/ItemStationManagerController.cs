@@ -18,12 +18,12 @@ public class ItemStationManagerController : MonoBehaviour
         items.Add("Pills");
         items.Add("Newspaper");
         items.Add("Coffee");
-        setupStations();
+       // setupStations();
     }
 
     void setupStations()
     {
-        Debug.Log("setting up");
+      //  Debug.Log("setting up");
         int setStations = 0;
         foreach (string item in items)
         {
@@ -35,6 +35,8 @@ public class ItemStationManagerController : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, stations.Count);
             GameObject adding = stations[randomIndex];
 
+            adding.GetComponent<ItemStationController>().SetItem(item);
+
             stations.RemoveAt(randomIndex);
 
         }
@@ -44,7 +46,7 @@ public class ItemStationManagerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
 

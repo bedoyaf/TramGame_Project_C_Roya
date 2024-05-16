@@ -15,6 +15,7 @@ public class Item
 
 public class outsideGameController : MonoBehaviour
 {
+   // public GameObject NonDeletedSuperObject;
     public GameObject CanvasManager;
 
     public GameObject player;
@@ -58,6 +59,7 @@ public class outsideGameController : MonoBehaviour
             // Check if time is up
             if (currentTime <= 0)
             {
+                Debug.Log("times up");
                 // Set game over flag to true
                 isGameOver = true;
 
@@ -76,7 +78,12 @@ public class outsideGameController : MonoBehaviour
     }
     public void end_scene()
     {
-        Debug.Log("Gathered count" + gatheredItems.Count());
+        List<string> items = player.GetComponent<outsidePlayerController>().get_player_inventory();
+        foreach(string i in items)
+        {
+            AddItemToStorage(i);
+        }
+        //Debug.Log("Gathered count" + gatheredItems.Count());
         SceneManager.LoadScene("Inside");
     }
 
@@ -88,4 +95,18 @@ public class outsideGameController : MonoBehaviour
             obj.SetActive(false);
         }
     }
+
+
+    public void Restart()//add any other reset
+    {
+        Debug.Log("restarting");
+      //  NonDeletedSuperObject.GetComponent<StringListManager>().ClearList();
+        SceneManager.LoadScene("Inside");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

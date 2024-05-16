@@ -85,6 +85,7 @@ public class outsidePlayerController : MonoBehaviour
         }
     }
 
+    public List<string> get_player_inventory() { return inventoryItems; }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

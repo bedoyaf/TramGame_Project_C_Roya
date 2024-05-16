@@ -10,7 +10,7 @@ public class outsideChangeUItext : MonoBehaviour
 
     TextMeshProUGUI itemtext;
 
-    public GameObject GameOverSign;
+    public GameObject GameOver;
 
     public TextMeshProUGUI timeText;
 
@@ -58,7 +58,8 @@ public class outsideChangeUItext : MonoBehaviour
     }
     public void ShowGameOver()
     {
-        GameOverSign.SetActive(true);
+
+        GameOver.SetActive(true);
     }
 
     // Update is called once per frame
