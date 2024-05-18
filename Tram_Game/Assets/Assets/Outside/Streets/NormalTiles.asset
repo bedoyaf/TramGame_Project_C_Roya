@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77dc8581e49c63847a9249fc73194954, type: 3}
+  m_Name: NormalTiles
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: fcc4cec5cb93ef14898687ae5fb9dfe7, type: 2}
+  - {fileID: 11400000, guid: 7763e78b0fd9c60499cd357217607d91, type: 2}
+  - {fileID: 11400000, guid: af96f7cfee817a6449f7477b776d5f83, type: 2}
+  - {fileID: 11400000, guid: 102b96794be02df44bd82f765bc2fd7b, type: 2}
+  walkingSpeed: 5

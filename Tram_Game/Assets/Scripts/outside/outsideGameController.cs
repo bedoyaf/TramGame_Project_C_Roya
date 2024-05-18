@@ -25,15 +25,20 @@ public class outsideGameController : MonoBehaviour
     private bool isGameOver = false; // Flag to check if game is over
 
     public StringListManager gatheredItems;
+    PeopleManager peopleManager;
 
     public List<GameObject> objectsToDeactivate = new List<GameObject>();
     public void AddItemToStorage(string item)
     {
         gatheredItems.Add(item);
     }
+
     void Start()
     {
         gatheredItems = FindObjectOfType<StringListManager>();
+        peopleManager = FindObjectOfType<PeopleManager>();
+        peopleManager.DisableAllUnsatisfiedPeople();
+
         if (gatheredItems == null)
         {
             GameObject managerObj = new GameObject("StringListManager");
@@ -100,6 +105,7 @@ public class outsideGameController : MonoBehaviour
     public void Restart()//add any other reset
     {
         Debug.Log("restarting");
+        gatheredItems.Clear();
       //  NonDeletedSuperObject.GetComponent<StringListManager>().ClearList();
         SceneManager.LoadScene("Inside");
     }

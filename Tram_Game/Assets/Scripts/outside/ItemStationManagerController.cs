@@ -7,7 +7,7 @@ public class ItemStationManagerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public List<GameObject> stations = new List<GameObject>();
+    public List<GameObject> stations;
 
     public List<string> items = new List<string>();
 
@@ -18,13 +18,14 @@ public class ItemStationManagerController : MonoBehaviour
         items.Add("Pills");
         items.Add("Newspaper");
         items.Add("Coffee");
-       // setupStations();
+        setupStations();
     }
 
     void setupStations()
     {
       //  Debug.Log("setting up");
         int setStations = 0;
+        
         foreach (string item in items)
         {
             setStations++;
@@ -35,14 +36,22 @@ public class ItemStationManagerController : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, stations.Count);
             GameObject adding = stations[randomIndex];
 
-            adding.GetComponent<ItemStationController>().SetItem(item);
+            if(adding != null)
+            {
+                ItemStationController addingController = adding.GetComponent<ItemStationController>();
+                addingController.SetItem(item);
 
-            stations.RemoveAt(randomIndex);
+                stations.RemoveAt(randomIndex);
+            }
 
         }
+        
         foreach(GameObject i in stations)
         {
-            i.SetActive(false);
+            if(i != null)
+            {
+                i.SetActive(false);
+            }
         }
     }
 

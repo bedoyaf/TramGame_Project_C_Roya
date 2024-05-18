@@ -11,15 +11,17 @@ public class GameCoreInside : MonoBehaviour
 
     public GameObject ItemName; // Prefab of the text object to spawn
     public RectTransform canvas;
-    public List<GameObject> itemTexts = new List<GameObject>();
+    private List<GameObject> itemTexts = new List<GameObject>();
     public float yOffset = 30f;
 
     public TextMeshProUGUI scoreText;
 
     public StringListManager gatheredItems;
+    PeopleManager peopleManager;
 
     void Start()
     {
+        peopleManager = FindObjectOfType<PeopleManager>();
         gatheredItems = FindObjectOfType<StringListManager>();
         foreach (string item in gatheredItems.stringList)
         {
@@ -30,7 +32,7 @@ public class GameCoreInside : MonoBehaviour
 
         // Play the ambient sound
         ambientSound.Play();
-
+        peopleManager.EnableAllUnsatisfiedPeople();
         UpdateScoreText();
     }
 
@@ -49,12 +51,12 @@ public class GameCoreInside : MonoBehaviour
     {
         gatheredItems.score += value;
         UpdateScoreText();
-        Debug.Log("Score: " + gatheredItems.score);
+        //Debug.Log("Score: " + gatheredItems.score);
     }
 
     public bool HasItem(string item)
     {
-        Debug.Log(gatheredItems.Count());
+       // Debug.Log(gatheredItems.Count());
         if (gatheredItems.Contains(item))
         {
             gatheredItems.Remove(item);
@@ -99,12 +101,14 @@ public class GameCoreInside : MonoBehaviour
     {
         for (int i = 0; i < itemTexts.Count; i++)
         {
-            if (itemTexts[i].GetComponent<TextMeshProUGUI>().text == text)
+            Debug.Log(itemTexts[i].GetComponent<TextMeshProUGUI>().text + ", " + text);
+            if (itemTexts[i].GetComponent<TextMeshProUGUI>().text == text)  
             {
-                Destroy(itemTexts[i]); // Destroy the corresponding GameObject
+                GameObject itemToRemove = itemTexts[i];
                 itemTexts.RemoveAt(i); // Remove from the list
                 UpdateTextPositions(); // Update positions of remaining text objects
-                break;
+                Destroy(itemToRemove); // Destroy the corresponding GameObject
+                break;  
             }
         }
     }

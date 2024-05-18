@@ -10,6 +10,8 @@ public class outsideChangeUItext : MonoBehaviour
 
     TextMeshProUGUI itemtext;
 
+    public TMP_FontAsset customFont;
+
     public GameObject GameOver;
 
     public TextMeshProUGUI timeText;
@@ -31,8 +33,11 @@ public class outsideChangeUItext : MonoBehaviour
 
         GameObject newTextObject = Instantiate(ItemName, canvas.transform);
 
-        newTextObject.GetComponent<TextMeshProUGUI>().text = text;
-        newTextObject.GetComponent<TextMeshProUGUI>().fontSize = 15;
+        TextMeshProUGUI textComponent = newTextObject.GetComponent<TextMeshProUGUI>();
+        textComponent.text = text;
+        textComponent.fontSize = 15;
+
+        textComponent.font = customFont;
 
         RectTransform rectTransform = newTextObject.GetComponent<RectTransform>();
 

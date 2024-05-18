@@ -11,6 +11,8 @@ public class PersonInside : MonoBehaviour
     private bool isSatisfied = false;
     private GameCoreInside gameCoreInside;
 
+    public int id;
+
     void Start()
     {
         // Disable all bubble sprites initially
@@ -22,7 +24,10 @@ public class PersonInside : MonoBehaviour
         // Randomly choose one item that the person wants
         chosenItem = itemTypes[Random.Range(0, itemTypes.Length)];
         ShowBubble(chosenItem);
+    }
 
+    private void OnEnable()
+    {
         gameCoreInside = FindObjectOfType<GameCoreInside>();
     }
 
@@ -40,6 +45,14 @@ public class PersonInside : MonoBehaviour
                 isSatisfied = true;
                 HideBubble();
                 gameCoreInside.RemoveItemText(chosenItem);
+
+                PeopleManager manager = FindObjectOfType<PeopleManager>();
+                if (manager != null)
+                {
+                    Debug.Log(gameObject);
+                    manager.DeregisterPerson(gameObject, id);
+                }
+                
             }
         }
     }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77dc8581e49c63847a9249fc73194954, type: 3}
+  m_Name: SlowTiles
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 8cf46e750cbf4c94db4e391251b926bb, type: 2}
+  - {fileID: 11400000, guid: 3dd5a51d3770b7d47b5b25e7272fd907, type: 2}
+  - {fileID: 11400000, guid: 48270985d4a87ac4b83d409032d1d83d, type: 2}
+  walkingSpeed: 2.5

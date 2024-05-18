@@ -37,6 +37,11 @@ public class StringListManager : MonoBehaviour
     {
         stringList.Remove(stringToRemove);
     }
+    public void Clear()
+    {
+        stringList.Clear();
+        score = 0;
+    }
 
     public bool Contains(string item)
     {

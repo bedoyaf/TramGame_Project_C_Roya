@@ -15,9 +15,9 @@ public class GeizerSpawner : MonoBehaviour
 
     public float spawnInterval = 5f; // Interval between spawns
     public float spawnChance = 0.9f; // Chance of spawning
-    public int numberOfSpawns = 4; // Number of scripts to spawn at once
+    public int numberOfSpawns = 4; // Number of geysers to spawn at once
     public float spawnRadius = 1f;
-    // Start is called before the first frame update
+
     void Start()
     {
         loc1 = transform.position;
@@ -25,10 +25,10 @@ public class GeizerSpawner : MonoBehaviour
 
         parentObject = Target.GetComponent<Transform>().parent;
 
-        StartCoroutine(SpawnScriptsRoutine());
+        StartCoroutine(SpawnGeysersRoutine());
     }
 
-    IEnumerator SpawnScriptsRoutine()
+    IEnumerator SpawnGeysersRoutine()
     {
         while (true)
         {
@@ -36,42 +36,45 @@ public class GeizerSpawner : MonoBehaviour
             if (!isSpawning)
             {
                 isSpawning = true;
-                // Instantiate the script prefab
 
                 for (int i = 0; i < numberOfSpawns; i++)
                 {
                     if (Random.value < spawnChance)
                     {
                         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-                        GameObject scriptObject = Instantiate(GeizerPrefab, spawnPosition, Quaternion.identity, parentObject);
+                        GameObject geizerObject = Instantiate(GeizerPrefab, spawnPosition, Quaternion.identity, parentObject);
 
-                        OutsideGeizerController scriptComponent = scriptObject.GetComponent<OutsideGeizerController>(); // Replace YourScriptComponent with the actual name of your script component
-                                                                                                                        // Set up the script with loc1 as character location and Target as the target object
-                                                                                                                        //   scriptComponent.transform.position = loc1;
+                        SpriteRenderer spriteRenderer = geizerObject.GetComponent<SpriteRenderer>();
+                        if (spriteRenderer != null)
+                        {
+                            spriteRenderer.sortingOrder = 1;
+                        }
+
+                        OutsideGeizerController scriptComponent = geizerObject.GetComponent<OutsideGeizerController>();
                         scriptComponent.targetOB = Instantiate(Target, parentObject);
                         scriptComponent.targetOB.transform.position += Random.insideUnitSphere * spawnRadius;
                     }
-                    // Calculate random position within the spawn radius
-
                 }
+
                 for (int i = 0; i < numberOfSpawns; i++)
                 {
                     if (Random.value < spawnChance)
                     {
                         Vector3 spawnPosition = loc2 + Random.insideUnitSphere * spawnRadius;
-                        GameObject scriptObject = Instantiate(GeizerPrefab, spawnPosition, Quaternion.identity, parentObject);
+                        GameObject geizerObject = Instantiate(GeizerPrefab, spawnPosition, Quaternion.identity, parentObject);
 
-                        OutsideGeizerController scriptComponent = scriptObject.GetComponent<OutsideGeizerController>(); // Replace YourScriptComponent with the actual name of your script component
-                                                                                                                        // Set up the script with loc1 as character location and Target as the target object
-                                                                                                                        //   scriptComponent.transform.position = loc1;
+                        SpriteRenderer spriteRenderer = geizerObject.GetComponent<SpriteRenderer>();
+                        if (spriteRenderer != null)
+                        {
+                            spriteRenderer.sortingOrder = 1;
+                        }
+
+                        OutsideGeizerController scriptComponent = geizerObject.GetComponent<OutsideGeizerController>();
                         scriptComponent.targetOB = Instantiate(Target, parentObject);
                         scriptComponent.targetOB.transform.position = loc1;
                         scriptComponent.targetOB.transform.position += Random.insideUnitSphere * spawnRadius;
                     }
-                    // Calculate random position within the spawn radius
-
                 }
-
 
                 isSpawning = false;
             }
@@ -81,9 +84,8 @@ public class GeizerSpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        // Your update logic here (if needed)
     }
 }

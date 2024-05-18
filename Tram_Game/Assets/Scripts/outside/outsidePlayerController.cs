@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 
 public class outsidePlayerController : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class outsidePlayerController : MonoBehaviour
     [SerializeField] GameObject gameManager;
     [SerializeField] float rotationSpeed = 5f;
     [SerializeField] float movementSpeed = 5f;
+    public Tilemap tilemap;
+    public float normalSpeed = 5f;
+    public float slowSpeed = 2.5f;
+    public float fastSpeed = 6.9f;
 
     void Start()
     {
@@ -85,6 +91,38 @@ public class outsidePlayerController : MonoBehaviour
         }
     }
 
+    string GetTileTypeAtPlayerPosition()
+    {
+        Vector3Int tilePosition = tilemap.WorldToCell(transform.position);
+        var tile = tilemap.GetTile(tilePosition);
+        Debug.Log(tile.name);
+        if (tile == null) return null;
+
+        // Assuming you have set the names of the tiles in the Tile Palette
+        return tile.name;
+    }
+
+    void AdjustMovementSpeedBasedOnTile()
+    {
+        string tileType = GetTileTypeAtPlayerPosition();
+
+        switch (tileType)
+        {
+            case "Grass": // Replace with the actual name of your slow tile
+                movementSpeed = slowSpeed;
+                break;
+            case "Sreet Lines Water": // Replace with the actual name of your fast tile
+                movementSpeed = slowSpeed;
+                break;
+            case "Sreet Fancy": // Replace with the actual name of your fast tile
+                movementSpeed = fastSpeed;
+                break;
+            default:
+                movementSpeed = normalSpeed;
+                break;
+        }
+    }
+
     public List<string> get_player_inventory() { return inventoryItems; }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -124,6 +162,7 @@ public class outsidePlayerController : MonoBehaviour
     void Update()
     {
         rotate_character_to_mouse();
+        AdjustMovementSpeedBasedOnTile();
         MoveToInput();
         check_if_picking_up_item_then_proceed();
         if(Input.GetKeyDown(KeyCode.Space) && isOnDroppingOfStation) {
