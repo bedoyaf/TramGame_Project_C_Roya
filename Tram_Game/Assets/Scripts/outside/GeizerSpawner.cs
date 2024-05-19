@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class GeizerSpawner : MonoBehaviour
@@ -8,6 +9,9 @@ public class GeizerSpawner : MonoBehaviour
     public GameObject GeizerPrefab;
     Vector3 loc1;
     Vector3 loc2;
+
+   // public Vector3 deletePoint;
+  //  public float deleteDistance;
 
     bool isSpawning = false;
 
@@ -49,6 +53,10 @@ public class GeizerSpawner : MonoBehaviour
                         {
                             spriteRenderer.sortingOrder = 1;
                         }
+
+                       // geizerObject.GetComponent<OutsideGeizerController>().deleteDistancePoint = deletePoint;
+
+                      //  geizerObject.GetComponent<OutsideGeizerController>().deleteDistance = deleteDistance;
 
                         OutsideGeizerController scriptComponent = geizerObject.GetComponent<OutsideGeizerController>();
                         scriptComponent.targetOB = Instantiate(Target, parentObject);

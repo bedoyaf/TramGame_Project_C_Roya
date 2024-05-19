@@ -13,6 +13,9 @@ public class OutsideGeizerController : MonoBehaviour
     public float moveSpeed = 3f;
     public float rotationSpeed = 5f; // Speed of rotation
 
+    public Vector3 deleteDistancePoint;
+    public float deleteDistance;
+
 
     public 
     void Start()
@@ -43,6 +46,9 @@ public class OutsideGeizerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
             // If the creature has walked the desired distance, destroy it
+
+         //   float distanceFromPoint = Vector3.Distance(deleteDistancePoint, transform.position);
+
             if (distanceWalked >= despawnDistance)
             {
                 Destroy(gameObject);
@@ -50,4 +56,12 @@ public class OutsideGeizerController : MonoBehaviour
 
         }
     }
+   /* private void OnTriggerEnter(Collider other)
+    {
+        // Check if the other collider has a specific tag (optional)
+        if (other.CompareTag("GeizerDeleter"))
+        {
+            Destroy(gameObject);
+        }
+    }*/
 }
