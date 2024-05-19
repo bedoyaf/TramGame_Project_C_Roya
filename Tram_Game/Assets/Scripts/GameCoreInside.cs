@@ -1,19 +1,24 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameCoreInside : MonoBehaviour
 {
-    public AudioSource tramSound;
-    public AudioSource ambientSound;
     public AudioSource spacebarSound;
+    public AudioSource finsihTaskSound;
 
     public GameObject ItemName; // Prefab of the text object to spawn
     public RectTransform canvas;
     private List<GameObject> itemTexts = new List<GameObject>();
     public float yOffset = 30f;
 
+    public Image fadeImage;
+    public float fadeDuration = 1f;
+
+    public TMP_FontAsset customFont;
     public TextMeshProUGUI scoreText;
 
     public StringListManager gatheredItems;
@@ -27,11 +32,6 @@ public class GameCoreInside : MonoBehaviour
         {
             SpawnItemText(item);
         }
-        // Play the tram sound
-        tramSound.Play();
-
-        // Play the ambient sound
-        ambientSound.Play();
         peopleManager.EnableAllUnsatisfiedPeople();
         UpdateScoreText();
     }
@@ -41,14 +41,50 @@ public class GameCoreInside : MonoBehaviour
         // Check if the spacebar is pressed
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Play the spacebar sound
-            spacebarSound.Play();
-            SceneManager.LoadScene("Outside");
+            // Start the coroutine to handle the transition
+            StartCoroutine(FadeAndLoadScene());
         }
+    }
+
+    private IEnumerator FadeAndLoadScene()
+    {
+        // Play the spacebar sound
+        spacebarSound.Play();
+
+        // Start the fade to black
+        yield return StartCoroutine(FadeToBlack());
+
+        // Wait until the sound finishes playing
+        yield return new WaitWhile(() => spacebarSound.isPlaying);
+
+        // Load the new scene
+        SceneManager.LoadScene("Outside");
+    }
+
+    private IEnumerator FadeToBlack()
+    {
+        float elapsedTime = 0f;
+        Color color = fadeImage.color;
+        color.a = 0f;
+        fadeImage.color = color;
+        fadeImage.gameObject.SetActive(true);
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Clamp01(elapsedTime / fadeDuration);
+            fadeImage.color = color;
+            yield return null;
+        }
+
+        // Ensure the image is fully opaque
+        color.a = 1f;
+        fadeImage.color = color;
     }
 
     public void AddScore(int value)
     {
+        finsihTaskSound.Play();
         gatheredItems.score += value;
         UpdateScoreText();
         //Debug.Log("Score: " + gatheredItems.score);
@@ -79,21 +115,28 @@ public class GameCoreInside : MonoBehaviour
     {
         GameObject newTextObject = Instantiate(ItemName, canvas);
 
-        newTextObject.GetComponent<TextMeshProUGUI>().text = text;
-        newTextObject.GetComponent<TextMeshProUGUI>().fontSize = 15;
-        newTextObject.GetComponent<TextMeshProUGUI>().color = Color.black;
+        TextMeshProUGUI tmpComponent = newTextObject.GetComponent<TextMeshProUGUI>();
+        tmpComponent.text = text;
+        tmpComponent.fontSize = 15;
+        tmpComponent.color = Color.black;
+        tmpComponent.font = customFont; // Assign the custom font here
+        tmpComponent.alignment = TextAlignmentOptions.Center; // Set text alignment to center
 
         RectTransform rectTransform = newTextObject.GetComponent<RectTransform>();
 
         // Adjust the position of the new Text GameObject
-        rectTransform.pivot = new Vector2(0.05f, 0.9f);
+        rectTransform.pivot = new Vector2(0f, 0.9f);
 
         // Set anchor to top-left corner
-        rectTransform.anchorMin = new Vector2(0.05f, 0.85f);
-        rectTransform.anchorMax = new Vector2(0.05f, 0.85f);
+        rectTransform.anchorMin = new Vector2(0f, 0.9f);
+        rectTransform.anchorMax = new Vector2(0f, 0.9f);
 
         // Adjust anchored position to move down based on item count
         rectTransform.anchoredPosition -= new Vector2(0f, itemTexts.Count * yOffset);
+
+        // Optional: Set the width of the text box (adjust as needed)
+        rectTransform.sizeDelta = new Vector2(100, rectTransform.sizeDelta.y); // Set width to 200, adjust as needed
+
         itemTexts.Add(newTextObject);
     }
 

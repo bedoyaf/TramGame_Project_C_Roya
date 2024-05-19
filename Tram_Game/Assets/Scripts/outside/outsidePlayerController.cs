@@ -8,6 +8,8 @@ using UnityEngine.Tilemaps;
 public class outsidePlayerController : MonoBehaviour
 {
     public GameObject CanvasManager;
+    public AudioSource newItemSound;
+    public AudioSource transferItemsSound;
 
     public List<string> inventoryItems = new List<string>();
     public int inventoryCapacity = 5;
@@ -71,8 +73,9 @@ public class outsidePlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isOnItemStation)
         {
-            if(inventoryItems.Count<inventoryCapacity)
+            if (inventoryItems.Count<inventoryCapacity)
             {
+                newItemSound.Play();
                 string item = currentItemStation.GetComponent<ItemStationController>().CreateItem();
                 inventoryItems.Add(item);
                 CanvasManager.GetComponent<outsideChangeUItext>().SpawnItemText(item);
@@ -81,6 +84,10 @@ public class outsidePlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.E) && isOnDroppingOfStation)
         {
+            if (inventoryItems.Count > 0)
+            {
+                transferItemsSound.Play();
+            }
             for(int i = 0; i < inventoryItems.Count; i++)
             {
                 gameManager.GetComponent<outsideGameController>().AddItemToStorage(inventoryItems[i]);

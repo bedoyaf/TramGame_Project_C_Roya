@@ -19,6 +19,8 @@ public class outsideGameController : MonoBehaviour
     public GameObject CanvasManager;
 
     public GameObject player;
+    public AudioSource gameOverSound;
+    public AudioSource newItemSound;
 
     public float totalTime = 30f; // Total time for the timer
     private float currentTime; // Current time left
@@ -94,6 +96,7 @@ public class outsideGameController : MonoBehaviour
 
     void GameOver()
     {
+        gameOverSound.Play();
         CanvasManager.GetComponent<outsideChangeUItext>().ShowGameOver();
         foreach (GameObject obj in objectsToDeactivate)
         {

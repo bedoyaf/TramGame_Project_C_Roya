@@ -9,7 +9,6 @@ public class PeopleManager : MonoBehaviour
     GameObject sceneRoot;
     private Dictionary<int, GameObject> chairToUnsatisfiedPerson = new Dictionary<int, GameObject>();
 
-
     private void Start()
     {
         sceneRoot = FindObjectOfType<GameCoreInside>().gameObject;
