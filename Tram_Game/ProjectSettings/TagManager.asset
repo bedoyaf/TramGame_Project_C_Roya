@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ItemStation
   - DroppingOfStation
+  - GeizerDeleter
   layers:
   - Default
   - TransparentFX
