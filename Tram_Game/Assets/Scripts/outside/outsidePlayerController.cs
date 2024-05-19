@@ -108,14 +108,17 @@ public class outsidePlayerController : MonoBehaviour
 
         switch (tileType)
         {
+            case "Sreet Fancy": // Replace with the actual name of your fast tile
+                movementSpeed = fastSpeed;
+                break;
             case "Grass": // Replace with the actual name of your slow tile
+                movementSpeed = slowSpeed;
+                break;
+            case "Grass2": // Replace with the actual name of your slow tile
                 movementSpeed = slowSpeed;
                 break;
             case "Sreet Lines Water": // Replace with the actual name of your fast tile
                 movementSpeed = slowSpeed;
-                break;
-            case "Sreet Fancy": // Replace with the actual name of your fast tile
-                movementSpeed = fastSpeed;
                 break;
             default:
                 movementSpeed = normalSpeed;
